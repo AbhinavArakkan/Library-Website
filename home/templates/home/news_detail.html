@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ news_item.headline }} - യുവജന വായനശാല & ഗ്രന്ഥാലയം</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;600;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2d3748;
+            --accent-color: #d4851f;
+            --gold-accent: #b8860b;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --bg-cream: #fefcf3;
+            --bg-light: #f7fafc;
+            --border-light: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Custom scrollbar */
+        body::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        html::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+            overflow-x: hidden;
+        }
+
+        html {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+            overflow-x: hidden;
+        }
+
+        /* Header Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 70%, var(--accent-color) 100%);
+            color: white;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(212, 133, 31, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(184, 134, 11, 0.15) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-heading {
+            font-family: 'Noto Sans Malayalam', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            height: 100vh;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            overflow-x: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 80px;
+            z-index: 1050;
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.open {
+            width: 280px;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            margin: 5px 0;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+            width: 20px;
+            font-size: 1.2rem;
+        }
+
+        .sidebar a.malayalam {
+            font-family: 'Manjari', sans-serif;
+        }
+
+        .sidebar a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        /* Menu Button */
+        .menu-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.8rem;
+            z-index: 1060;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .menu-btn.animate {
+            animation: buttonPulse 0.3s ease;
+        }
+
+        @keyframes buttonPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            z-index: 1060;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Manjari', sans-serif;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Go to Top Button */
+        .go-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .go-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .go-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            z-index: 1040;
+            backdrop-filter: blur(2px);
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* News Detail Section */
+        .news-detail-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .news-detail-container {
+            position: relative;
+            background: white;
+            padding: 0;
+            margin: 20px auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px var(--shadow-light);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            max-width: 900px;
+        }
+
+        .news-detail-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--gold-accent));
+        }
+
+        .news-image {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+
+        .news-detail-content {
+            padding: 40px;
+        }
+
+        .news-meta {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 2px solid var(--border-light);
+            /* Add this */
+        }
+
+        .news-headline {
+            font-family: 'Noto Sans Malayalam', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .news-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+        }
+
+        .news-date i {
+            margin-right: 8px;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .news-content {
+            font-family: 'Manjari', sans-serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            text-align: left;
+            /* Change from justify */
+            white-space: pre-line;
+            /* Change from pre-wrap - better spacing control */
+            word-wrap: break-word;
+            margin-bottom: 0;
+        }
+
+        /* Add spacing between paragraphs if they exist */
+        .news-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .news-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .page-heading {
+                font-size: 2rem;
+            }
+
+            .hero-section {
+                padding: 50px 0;
+            }
+
+            .news-image {
+                height: 350px;
+            }
+
+            .news-detail-content {
+                padding: 30px;
+            }
+
+            .news-headline {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-heading {
+                font-size: 1.8rem;
+                margin-top: 30px;
+                /* Add this */
+            }
+
+            .hero-section {
+                padding: 50px 0 40px;
+                /* Increase top padding */
+            }
+
+            .news-detail-section {
+                padding: 10px 0;
+            }
+
+            .menu-btn {
+                top: 15px;
+                left: 15px;
+                padding: 10px 12px;
+                font-size: 1.3rem;
+            }
+
+            .back-btn {
+                top: 15px;
+                right: 15px;
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+
+            .sidebar {
+                padding-top: 60px;
+            }
+
+            .sidebar.open {
+                width: 250px;
+            }
+
+            .sidebar a {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+
+            .news-image {
+                height: 250px;
+            }
+
+            .news-detail-content {
+                padding: 25px 20px;
+            }
+
+            .news-headline {
+                font-size: 1.4rem;
+            }
+
+            .news-content {
+                font-size: 1.05rem;
+                line-height: 1.6;
+            }
+
+            .news-detail-container {
+                margin: 5px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-heading {
+                font-size: 1.5rem;
+                margin-top: 35px;
+                /* Add this */
+            }
+
+            .hero-section {
+                padding: 35px 0 35px;
+                /* Increase top padding */
+            }
+
+            .back-btn {
+                top: 12px;
+                /* Adjust if needed */
+                right: 12px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .news-headline {
+                font-size: 1.2rem;
+            }
+
+            .news-date {
+                font-size: 0.85rem;
+            }
+
+            .news-content {
+                font-size: 1rem;
+                text-align: left;
+            }
+
+            .news-image {
+                height: 200px;
+            }
+
+            .news-detail-content {
+                padding: 20px 15px;
+            }
+
+            .news-meta {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="{% url 'home' %}">
+            <i class="bi bi-house-door"></i>
+            Home
+        </a>
+        <a href="{% url 'news' %}" class="malayalam">
+            <i class="bi bi-newspaper"></i>
+            വാർത്തകൾ
+        </a>
+        <a href="{% url 'history' %}" class="malayalam">
+            <i class="bi bi-clock-history"></i>
+            ചരിത്രം
+        </a>
+        <a href="{% url 'images' %}">
+            <i class="bi bi-images"></i>
+            Gallery
+        </a>
+        <a href="https://chat.whatsapp.com/ETsgAItUZu77stfHUU6rOO" target="_blank">
+            <i class="bi bi-whatsapp"></i>
+            WhatsApp
+        </a>
+        <a href="tel:9895834295">
+            <i class="bi bi-telephone"></i>
+            Call
+        </a>
+        <a href="mailto:yvsk3508@gmail.com">
+            <i class="bi bi-envelope"></i>
+            Email
+        </a>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+    <!-- Menu Button -->
+    <button class="menu-btn" id="menuBtn" onclick="toggleNav()">
+        <i class="bi bi-list" id="menuIcon"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <a href="{% url 'news' %}" class="back-btn">
+            <i class="bi bi-arrow-left"></i>
+            മടങ്ങുക
+        </a>
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="page-heading">വാർത്തകൾ</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Detail Section -->
+    <section class="news-detail-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="news-detail-container fade-in-up">
+                        <img src="{{ news_item.image.url }}" alt="{{ news_item.headline }}" class="news-image"
+                            loading="lazy">
+
+                        <div class="news-detail-content">
+                            <div class="news-meta">
+                                <h2 class="news-headline">{{ news_item.headline }}</h2>
+                                <p class="news-date">
+                                    <i class="bi bi-calendar-event"></i>
+                                    {{ news_item.uploaded_date }}
+                                </p>
+                            </div>
+
+                            <div class="news-content">{{ news_item.content }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Go to Top Button -->
+    <button class="go-to-top" id="goToTopBtn" onclick="scrollToTop()">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Navigation functions
+        function toggleNav() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuIcon = document.getElementById('menuIcon');
+            const menuBtn = document.getElementById('menuBtn');
+
+            // Add pulse animation
+            menuBtn.classList.add('animate');
+            setTimeout(() => {
+                menuBtn.classList.remove('animate');
+            }, 300);
+
+            if (sidebar.classList.contains('open')) {
+                closeNav();
+            } else {
+                openNav();
+            }
+        }
+
+        function openNav() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuIcon = document.getElementById('menuIcon');
+
+            sidebar.classList.add('open');
+            overlay.classList.add('show');
+            menuIcon.className = 'bi bi-x-lg';
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        }
+
+        function closeNav() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuIcon = document.getElementById('menuIcon');
+
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+            menuIcon.className = 'bi bi-list';
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto';
+        }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('menuBtn');
+
+            if (sidebar.classList.contains('open') &&
+                !sidebar.contains(e.target) &&
+                !menuBtn.contains(e.target)) {
+                closeNav();
+            }
+        });
+
+        // Go to Top Button functionality
+        const goToTopBtn = document.getElementById('goToTopBtn');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                goToTopBtn.classList.add('show');
+            } else {
+                goToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('.hero-section');
+            const heroContent = document.querySelector('.hero-content');
+
+            if (heroSection && scrolled <= heroSection.offsetHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+                heroContent.style.opacity = 1 - (scrolled / heroSection.offsetHeight);
+            }
+        });
+
+        // Add scroll-triggered animations
+        const fadeElements = document.querySelectorAll('.fade-in-up');
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.15 });
+
+        fadeElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            fadeObserver.observe(element);
+        });
+    </script>
+</body>
+
+</html>

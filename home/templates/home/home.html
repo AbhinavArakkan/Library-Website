@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>യുവജന വായനശാല & ഗ്രന്ഥാലയം</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;600;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2d3748;
+            --accent-color: #d4851f;
+            --gold-accent: #b8860b;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --bg-cream: #fefcf3;
+            --bg-light: #f7fafc;
+            --border-light: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Custom scrollbar */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        body::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+        }
+
+        /* Header Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 70%, var(--accent-color) 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(212, 133, 31, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(184, 134, 11, 0.15) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-heading {
+            font-family: 'Noto Sans Malayalam', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            margin-bottom: 3rem;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            margin-top: 3rem;
+        }
+
+        .btn-library {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            padding: 14px 28px;
+            margin: 8px;
+            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.95rem;
+            letter-spacing: 0.025em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Remove or modify this */
+        .nav-buttons .row {
+            flex-wrap: wrap;
+            /* Change to wrap for mobile */
+        }
+
+        /* Keep this only for large screens */
+        @media (min-width: 992px) {
+            .nav-buttons .row {
+                flex-wrap: nowrap;
+                /* Single line only on big screens */
+            }
+
+            .nav-buttons .col-lg-10 {
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: center;
+                gap: 0;
+            }
+
+            .btn-library {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+        }
+
+        .btn-library::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-library:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary-library {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-primary-library:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-outline-library {
+            background: transparent;
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-outline-library:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Library Info Section */
+        .library-info {
+            padding: 100px 0;
+            background: white;
+            position: relative;
+        }
+
+        .library-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-light), transparent);
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow:
+                0 20px 40px var(--shadow-light),
+                0 1px 3px var(--shadow-medium);
+            transition: all 0.4s ease;
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--gold-accent));
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.1),
+                0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .hours-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 18px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(26, 54, 93, 0.3);
+        }
+
+        .book-counter {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-color), var(--gold-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .books-description {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 100px 0;
+            background: var(--bg-light);
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--gold-accent));
+            border-radius: 2px;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .member-card:hover {
+            box-shadow: 0 15px 40px var(--shadow-medium);
+        }
+
+        .member-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(212, 133, 31, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .member-image:hover {
+            transform: scale(1.05);
+        }
+
+        .member-name {
+            font-family: 'Noto Sans Malayalam', sans-serif;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .member-position {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--shadow-medium);
+            border: 1px solid var(--border-light);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 20px 40px rgba(26, 54, 93, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 133, 31, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .contact-card h4 {
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-item i {
+            margin-right: 15px;
+            width: 24px;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .contact-item span {
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--text-dark) 0%, #000 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .footer-content {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-tagline {
+            color: var(--accent-color);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes bookFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating {
+            animation: bookFloat 3s ease-in-out infinite;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .main-heading {
+                font-size: 3rem;
+            }
+
+            .hero-section {
+                padding: 80px 0;
+            }
+
+            .info-card {
+                padding: 40px 30px;
+            }
+
+            .book-counter {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-heading {
+                font-size: 2.2rem;
+            }
+
+            .hero-section {
+                padding: 60px 0;
+            }
+
+            .btn-library {
+                display: block;
+                margin: 10px auto;
+                width: 85%;
+                max-width: 320px;
+            }
+
+            .book-counter {
+                font-size: 2.5rem;
+            }
+
+            .info-card {
+                padding: 30px 20px;
+            }
+
+            .team-section {
+                padding: 60px 0;
+                /* Reduced from 100px */
+            }
+
+            .team-member {
+                margin-bottom: 20px;
+                /* Reduced from 40px */
+            }
+
+            .member-card {
+                padding: 20px 15px;
+                /* Reduced padding */
+                margin-bottom: -30px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px;
+                /* Reduced from 60px */
+            }
+
+            .map-container iframe {
+                height: 300px;
+            }
+
+            .contact-card {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1 class="main-heading fade-in-up" id="typing-heading"></h1>
+                    <p class="hero-subtitle fade-in-up">A Distinguished Legacy of
+                        Knowledge & Learning Since 1983</p>
+
+                    <div class="nav-buttons fade-in-up">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <a href="{% url 'history' %}" class="btn btn-library btn-primary-library">
+                                    <i class="bi bi-clock-history me-2"></i>ചരിത്രം
+                                </a>
+                                <a href="{% url 'news' %}" class="btn btn-library btn-primary-library">
+                                    <i class="bi bi-newspaper me-2"></i>വാർത്തകൾ
+                                </a>
+                                <a href="{% url 'images' %}" class="btn btn-library btn-outline-library">
+                                    <i class="bi bi-images me-2"></i>Gallery
+                                </a>
+                                <a href="https://chat.whatsapp.com/ETsgAItUZu77stfHUU6rOO"
+                                    class="btn btn-library btn-outline-library">
+                                    <i class="bi bi-whatsapp me-2"></i>WhatsApp
+                                </a>
+                                <a href="tel:9895834295" class="btn btn-library btn-outline-library">
+                                    <i class="bi bi-telephone me-2"></i>Call
+                                </a>
+                                <a href="mailto:yvsk3508@gmail.com" class="btn btn-library btn-outline-library">
+                                    <i class="bi bi-envelope me-2"></i>Email
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Info Section -->
+    <section class="library-info">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="info-card text-center fade-in-up floating">
+                        <div class="hours-badge">
+                            <i class="bi bi-clock me-2"></i>Library Hours: 5:00 PM to 7:00 PM
+                        </div>
+                        <div class="mt-4">
+                            <div class="mb-3">
+                                <span class="book-counter" id="book-count">9950</span>
+                                <span class="book-counter">+</span>
+                            </div>
+                            <h3 class="mt-3 mb-4" style="color: var(--text-dark); font-weight: 600;">Books Available
+                            </h3>
+                            <p class="books-description">Discover an extensive collection of literary treasures spanning
+                                diverse genres, languages, and subjects. Our carefully curated library serves as a
+                                beacon of knowledge for our community, fostering intellectual growth and cultural
+                                enrichment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="section-title fade-in-up">Our Distinguished Team</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                {% for member in members %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 fade-in-up">
+                    <div class="team-member">
+                        <div class="member-card">
+                            <img src="{{ member.img.url }}" alt="{{ member.position }}" class="member-image">
+                            <p class="member-position">{{ member.position }}</p>
+                            <h5 class="member-name">{{ member.name }}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Map and Contact Section -->
+    <section class="map-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mb-4 mb-lg-0 fade-in-up">
+                    <h2 class="section-title text-start">Visit Our Library</h2>
+                    <div class="map-container">
+                        <iframe loading="lazy" allowfullscreen
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1968.0731118458553!2d75.39404814585286!3d11.966430993880976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba43f5d01ee2ba1%3A0x949c279c41b189f0!2sYuvajana%20Vayanasala%20%26%20Grandhalayam%20Kambil!5e0!3m2!1sen!2sin!4v1647615696953!5m2!1sen!2sin">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="col-lg-4 fade-in-up" style="animation-delay: 0.3s;">
+                    <div class="contact-card">
+                        <div class="contact-content">
+                            <h4><i class="bi bi-geo-alt me-2"></i>Contact Information</h4>
+                            <div class="contact-item">
+                                <i class="bi bi-bank"></i>
+                                <span>Yuvajana Vayanashala & Grandhalayam</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-calendar-check"></i>
+                                <span>Established 1983</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-file-text"></i>
+                                <span>Registration No: 3508</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-envelope"></i>
+                                <span>yvsk3508@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>Kambil, Kannur, Kerala - 670601</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-telephone"></i>
+                                <span>+91 98958 34295</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer-content">
+                        <p class="mb-2 h5">&copy; 2024 Yuvajana Vayanashala & Grandhalayam Kambil</p>
+                        <p class="footer-tagline">Preserving Heritage • Inspiring Minds • Building Futures</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        // Typing effect for the heading
+        const headingElement = document.getElementById("typing-heading");
+        const textToType = "യുവജന വായനശാല & ഗ്രന്ഥാലയം കമ്പിൽ";
+        let i = 0;
+
+        function typeHeading() {
+            if (i < textToType.length) {
+                headingElement.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeHeading, 50);
+            }
+        }
+
+        // Start typing effect after page load
+        setTimeout(typeHeading, 0);
+
+        // Counting animation for the book count
+        const bookCountElement = document.getElementById("book-count");
+        let count = 9940;
+
+        function countTo10k() {
+            if (count < 10000) {
+                count++;
+                bookCountElement.textContent = count.toLocaleString();
+                setTimeout(countTo10k, 6);
+            }
+        }
+
+        // Start counting animation when element is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    countTo10k();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(bookCountElement);
+
+        // Add scroll-triggered animations with staggered delay for team members
+        const fadeElements = document.querySelectorAll('.fade-in-up');
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.15 });
+
+        fadeElements.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(40px)';
+
+            // Add staggered delay for team members
+            if (element.closest('.team-section')) {
+                const teamIndex = Array.from(element.parentElement.children).indexOf(element);
+                element.style.transition = `opacity 1s ease ${teamIndex * 0.15}s, transform 1s ease ${teamIndex * 0.15}s`;
+            } else {
+                element.style.transition = 'opacity 1s ease, transform 1s ease';
+            }
+
+            fadeObserver.observe(element);
+        });
+
+        // Add smooth scroll behavior for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+
+</html>

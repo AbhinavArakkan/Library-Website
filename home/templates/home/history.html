@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ചരിത്രം - യുവജന വായനശാല & ഗ്രന്ഥാലയം</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;600;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2d3748;
+            --accent-color: #d4851f;
+            --gold-accent: #b8860b;
+            --text-dark: #1a202c;
+            --text-light: #4a5568;
+            --bg-cream: #fefcf3;
+            --bg-light: #f7fafc;
+            --border-light: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Custom scrollbar */
+        body::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        html::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+            overflow-x: hidden;
+        }
+
+        html {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+            overflow-x: hidden;
+        }
+
+        /* Header Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 70%, var(--accent-color) 100%);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(212, 133, 31, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(184, 134, 11, 0.15) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-heading {
+            font-family: 'Noto Sans Malayalam', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .page-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            height: 100vh;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            overflow-x: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 80px;
+            z-index: 1050;
+            box-shadow: 5px 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.open {
+            width: 280px;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            margin: 5px 0;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+            width: 20px;
+            font-size: 1.2rem;
+        }
+
+        .sidebar a.malayalam {
+            font-family: 'Manjari', sans-serif;
+        }
+
+        .sidebar a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        /* Menu Button */
+        .menu-btn {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.8rem;
+            z-index: 1060;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .menu-btn.animate {
+            animation: buttonPulse 0.3s ease;
+        }
+
+        @keyframes buttonPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Go to Top Button */
+        .go-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .go-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .go-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            z-index: 1040;
+            backdrop-filter: blur(2px);
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* History Content */
+        .history-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .history-container {
+            position: relative;
+            background: white;
+            padding: 50px 40px;
+            margin: 20px auto;
+            border: 2px solid var(--border-light);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 15px 15px 0;
+            box-shadow:
+                15px 20px 40px var(--shadow-light),
+                0 5px 15px var(--shadow-medium);
+            font-family: 'Noto Sans Malayalam', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 900px;
+            transition: transform 0.3s ease;
+        }
+
+        .history-container:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                20px 25px 50px rgba(0, 0, 0, 0.2),
+                0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Notebook binding effect */
+        .history-container::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -4px;
+            width: 8px;
+            height: calc(100% + 4px);
+            background: linear-gradient(to bottom,
+                    var(--accent-color) 50%,
+                    var(--gold-accent) 52%,
+                    transparent 54%);
+            background-size: 100% 20px;
+            border-radius: 4px 0 0 4px;
+            box-shadow:
+                2px 0 6px rgba(0, 0, 0, 0.1),
+                inset -1px 0 3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* History text styling */
+        .history-text {
+            color: var(--text-dark);
+            text-align: justify;
+            text-indent: 2em;
+            margin-bottom: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        @media (max-width: 576px) {
+            .history-text {
+                text-align: left;
+                text-indent: 1.5em;
+            }
+        }
+
+        .history-text br {
+            display: block;
+            margin-bottom: 1.5em;
+            content: "";
+        }
+
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .page-heading {
+                font-size: 2.8rem;
+            }
+
+            .hero-section {
+                padding: 60px 0;
+            }
+
+            .history-container {
+                padding: 35px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-heading {
+                font-size: 2.2rem;
+            }
+
+            .hero-section {
+                padding: 50px 0;
+            }
+
+            .history-container {
+                padding: 25px 20px;
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 15px;
+            }
+
+            .history-section {
+                padding: 50px 0;
+            }
+
+            .menu-btn {
+                top: 15px;
+                left: 15px;
+                padding: 10px 12px;
+                font-size: 1.3rem;
+            }
+
+            .sidebar {
+                padding-top: 60px;
+            }
+
+            .sidebar.open {
+                width: 250px;
+            }
+
+            .sidebar a {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .history-container {
+                padding: 20px 15px;
+                font-size: 0.9rem;
+                margin: 10px;
+            }
+
+            .page-heading {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="{% url 'home' %}">
+            <i class="bi bi-house-door"></i>
+            Home
+        </a>
+        <a href="{% url 'news' %}" class="malayalam">
+            <i class="bi bi-newspaper"></i>
+            വാർത്തകൾ
+        </a>
+        <a href="{% url 'images' %}">
+            <i class="bi bi-images"></i>
+            Gallery
+        </a>
+        <a href="https://chat.whatsapp.com/ETsgAItUZu77stfHUU6rOO" target="_blank">
+            <i class="bi bi-whatsapp"></i>
+            WhatsApp
+        </a>
+        <a href="tel:9895834295">
+            <i class="bi bi-telephone"></i>
+            Call
+        </a>
+        <a href="mailto:yvsk3508@gmail.com">
+            <i class="bi bi-envelope"></i>
+            Email
+        </a>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeNav()"></div>
+
+    <!-- Menu Button -->
+    <button class="menu-btn" id="menuBtn" onclick="toggleNav()">
+        <i class="bi bi-list" id="menuIcon"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="page-heading" id="typing-heading"></h1>
+                    <p class="page-subtitle">
+                        Built by the Community, Nurtured Through Generations
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Content Section -->
+    <section class="history-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="history-container" style="animation-delay: 0.3s;">
+                        <p class="history-text">
+                            ഏകദേശം അറുപത്ത് വർഷങ്ങൾക്ക് മുൻപ് കമ്പിൽ പ്രദേശം കൈത്തറിതൊഴിലാളികൾ തിങ്ങിപ്പാർക്കുന്ന കമ്പിൽ
+                            തെരുവും മത്സ്യത്തൊഴിലാളികൾ തിങ്ങിപ്പാർക്കുന്ന മീൻകടവ് പ്രദേശവും ഉൾപ്പെട്ടതായിരുന്നു.
+                            വിദ്യാഭ്യാസത്തിൻ്റെ കാര്യത്തിൽ വളരെയേറെ പിന്നോക്കം നിൽക്കുന്ന പ്രദേശമായിരുന്നു. കുടുംബത്തിലെ
+                            മുഴുവൻപേരും ചേർന്ന് കിട്ടുന്ന തൊഴിൽ ചെയ്‌താലും ഭക്ഷണത്തിന് പോലും വരുമാനം തികയാത്ത കാലത്ത്
+                            തങ്ങളുടെ മക്കൾക്ക് വിദ്യാഭ്യാസം നൽകുക എന്നത് സ്വ‌പ്നം മാത്രമായിരുന്നു. പ്രാഥമിക വിദ്യാഭ്യാസം
+                            മാത്രം ലഭ്യമായ കുറച്ച് പേര് നാട്ടിലുണ്ടായിരുന്നു. അതിനെക്കാളേറെ തൊഴിലാളികളുടെ
+                            അവകാശങ്ങൾക്കുവേണ്ടി സംഘടിക്കാനും പ്രവർത്തിക്കാനും ആരംഭിച്ചതും നാട്ടിൻ്റെ പൊതുവായ
+                            മാറ്റങ്ങൾക്കുവേണ്ടി കർഷകരെയും കർഷക തൊഴിലാളികളെയും സംഘടിപ്പിച്ചുകൊണ്ട് പൊതുരാഷ്ട്രീയത്തിൽ
+                            ഉയർന്നുവന്ന സ: ചടയൻ ഗോവിന്ദനും അദ്ധ്യാപകനായി ജോലി ചെയ്യവെ അദ്ധ്യാപകരെ സംഘടിപ്പിച്ചുകൊണ്ട്
+                            ക്ഷേത്രപ്രവേശനത്തിന് വേണ്ടി സമരം നടത്തി കമ്മ്യൂണിസ്റ്റ് പാർട്ടി നേതാവായി ഉയർന്നുവന്ന
+                            ടി.സി.നാരായണൻ നമ്പ്യാരുടെയും പ്രവർത്തനങ്ങൾ നമ്മുടെ പ്രദേശത്തും ചലനങ്ങൾ ഉണ്ടാക്കി. എല്ലാ
+                            ജാതിയിലും പെട്ടവർക്ക് ഗണപതി മണ്ഡപത്തിൽ കയറാനും ആരാധിക്കാനുമുള്ള സ്വാതന്ത്ര്യത്തിനുവേണ്ടി
+                            സമരം നടത്തിയ സ: ചടയൻ ഗോവിന്ദൻ്റെ അമ്മാവനായ അരക്കൻ ശങ്കരൻ എന്നിവരുടെ സമരങ്ങളും പ്രദേശത്തെ
+                            ചെറുപ്പക്കാരെ ആകർഷിച്ച ഘടകങ്ങളായിരുന്നു.
+                            <br>കമ്മ്യൂണിസ്റ്റ് പാർടിയെ നിരോധിച്ച 1948-51 കാലഘട്ടം കമ്മ്യൂണിസ്റ്റ്കാരെ പോലീസും
+                            കോൺഗ്രസ്സിൻറെ സേവാദൾ വളണ്ടിയർമാരും ചേർന്ന് നിരന്തരം വേട്ടയാടുകയും മർദ്ദനം അഴിച്ചുവിടുകയും
+                            ചെയ്‌തുവന്നു. നേതാക്കന്മാർ കളിവിൽ താസിച്ചുകൊണ്ട് പ്രവർത്തകർക്ക് ആവേശകരമായി നേതൃത്വം
+                            നൽകിയപ്പോൾ തങ്ങളുടെ പ്രിയപ്പെട്ട നേതാക്കളെ കണ്ണിലെ കൃഷ്‌ണമണിപോലെ സംരക്ഷിച്ചത്
+                            രാഷ്ട്രീയബോധമുള്ള കമ്പിൽ തെരുവിലെ കൈത്തറി തൊഴിലാളികളായിരുന്നു. തെരുവിലൂടെ തുടർച്ചയായി
+                            സഞ്ചരിച്ചുകൊണ്ടിരുന്ന പോലീസിൻ്റെ കണ്ണുവെട്ടിച്ച് നേതാക്കൾക്ക് ഒളിത്താവളം ഒരുക്കി സംരക്ഷിച്ച
+                            തെരുവിലെ സംഘബോധവും രാഷ്ട്രീയ ബോധവുമുള്ള തൊഴിലാളികളുടെ ധീരത ഇന്നോർക്കാൻപോലും സാധിക്കുന്നതല്ല.
+                            നിരോധനം ലംഘിച്ചുകൊണ്ട് പ്രവർത്തകരെ സംഘടിപ്പിക്കാനും പഠിപ്പിക്കാനും എ.കെ.ജി. അടക്കമുള്ള
+                            നേതാക്കൾ കേരളത്തിലെ മുക്കിലും മൂലയിലും പ്രത്യക്ഷപ്പെടുകയും പ്രസംഗിക്കുകയും
+                            ചെയ്‌തുകൊണ്ടിരുന്നു. അപ്പോഴേക്കും സ: ചടയൻ പൂർണ്ണസമയ രാഷ്ട്രീയ പ്രവർത്തകനായി മാറിയിരുന്നു.
+                            ക്രമേണ കമ്പിൽ പ്രദേശം ഒരു രാഷ്ട്രീയ കേന്ദ്രമായി വളർന്നുവരാൻ തുടങ്ങി. പറശ്ശിനിക്കടവ്,
+                            കൊളച്ചേരി, ചേലേരി, അരിമ്പ്ര, മയ്യിൽ, കുറ്റ്യാട്ടൂർ എന്നീ പ്രദേശങ്ങളിലുള്ളവർ
+                            രാഷ്ട്രീയപ്രസംഗങ്ങൾ കേൾക്കാൻ ഒത്തുകൂടുന്നത് പതിവായി വന്നു. എ.കെ.ജി. കണ്ണൂരിൽ പ്രസംഗിച്ചാൽ
+                            തൊട്ടടുത്ത ദിവസം പ്രസംഗിച്ചിരുന്നത് കമ്പിലായിരുന്നു.
+                            <br>48 വർഷങ്ങൾക്ക് മുൻപ് കമ്പിൽ പ്രദേശത്ത് രൂപീകരിക്കപ്പെട്ട യുത്ത് ഫെഡറേഷൻ്റെ ഓഫീസ്
+                            ഉൽഘാടനവേളയിൽ സ: എ.കെ.ജിയാണ് രാഷ്ട്രീയ പ്രബുദ്ധമായ കമ്പിൽ പ്രദേശത്ത് വായനശാലയും ഗ്രന്ഥശാലയും
+                            ഇല്ലാത്തതിൻ്റെ കുറവ് ചൂണ്ടിക്കാട്ടിയത്. ഈ കുറവ് പരിഹരിക്കുന്നതിന് സ: ചടയനടക്കമുള്ള ഒരു
+                            ഡസനോളം പ്രവർത്തകർ ചേർന്ന് വായനശാല ഉണ്ടാക്കാൻ തീരുമാനിച്ചു. ഇതിനെതുടർന്നാണ് ഇന്ന് നാം കാണുന്ന
+                            വായനശാലയും ഗ്രന്ഥാലയവും സ്ഥാപിക്കപ്പെട്ടത്. അതിന്റെ ആദ്യ പ്രസിഡന്റ് പി.പി.ഗോവിന്ദൻ വൈദ്യരും
+                            സിക്രട്ടറി സി.കൃഷ്‌ണനുമായിരുന്നു.
+                            <br>രാജ്യത്തെ വാർത്തകൾ അറിയാൻ യാതൊരു വഴിയുമില്ലാതിരുന്നകാലം, പത്രം വാങ്ങി വായിക്കാൻ
+                            ശേഷിയില്ലാത്ത ജനങ്ങൾ, വീടുകളിൽ റേഡിയോ ഇല്ലാതിരുന്ന കാലം, യാത്ര ചെയ്ത്‌ വരുന്നവരിൽ നിന്നും
+                            കിട്ടുന്ന വിവരങ്ങൾ മാത്രം അറിവായിരുന്ന കാലം. അക്കാലത്താണ് കൂട്ടായ്മയിലൂടെ പത്രം വരുത്താൻ
+                            ആലോചനനടത്തിയതും മറ്റുള്ളവർക്കുകൂടി അിറവ് എത്തിക്കാൻ വായനശാല തുടങ്ങുന്നതിനും എല്ലാ
+                            വിഭാഗത്തിലും ഉള്ളവർ ഒത്തുചേർന്ന് വായനശാല കമ്മിറ്റി രൂപീകരിച്ച് പ്രവർത്തനം ആരംഭിച്ചതും.
+                            വാടകകെട്ടിടത്തിൽ ആരംഭിച്ച വായനശാലയിൽ അന്നത്തെ ചെറുപ്പക്കാരുടെ ശ്രമഫലമായി ദേശാഭിമാനി,
+                            മാത്യഭൂമി, മനോരമ പത്രങ്ങളും ചില വാരികയും മാത്രമാണ് ഉണ്ടായിരുന്നത്. കുറച്ചുകൂടി പ്രവർത്തനങ്ങൾ
+                            വിപുലപ്പെടുത്തി കൂടുതൽ പത്രങ്ങൾ വരുത്തിത്തുടങ്ങി. പത്രങ്ങളിലൂടെയുള്ള വിവരങ്ങൾ മാത്രം
+                            അറിഞ്ഞാൽപോര എന്നും ഒരു പ്രദേശത്തിൻ്റെ വളർച്ചയ്ക്ക് അടിസ്ഥാനവിദ്യാഭ്യാസം ആവശ്യമാണെന്നുമുള്ള
+                            ബോദ്ധ്യത്തെത്തുടർന്ന് ഗ്രന്ഥശാലയായി വളർത്തണമെന്ന ചിന്ത ശക്തമായിവന്നതിനെത്തുടർന്ന് ഈ
+                            പ്രദേശത്തെ പുസ്‌തകം വാങ്ങിക്കുന്നവരുടെ വീടുകളിൽ കയറി പുസ്‌തകം ശേഖരിക്കുന്നതിന്
+                            തീരുമാനിക്കുകയും പുസ്‌തകശേഖരണം നടത്തുകയും ചെയ്‌തുകൊണ്ടാണ് ഗ്രന്ഥശാല പ്രവർത്തനം
+                            ആരംഭിക്കുന്നത്. എ.കെ.ജിയും നായനാരും ടി.സി.നാരായണൻ നമ്പ്യാരും പുസ്‌തകങ്ങൾ നൽകിയവരിൽ
+                            പ്രമുഖരായിരുന്നു. പുസ്‌തകം സൂക്ഷിക്കാനുള്ള അലമാരയും പുസ്‌തക വിതരണത്തിന് വേണ്ടിയുള്ള
+                            സംവിധാനവും എല്ലാം അന്നത്തെ ചെറുപ്പക്കാരുടെ കഠിനപ്രയത്നത്തിൻ്റെ ഫലമായിരുന്നു.
+                            <br>വിദ്യാഭ്യാസമില്ലാതിരുന്ന ചെറുപ്പക്കാർക്ക് ‌കൂടി വായനസാധിക്കണമെങ്കിൽ അവരെ എഴുതുവാനും
+                            വായിക്കാനും പഠിപ്പിക്കേണ്ടത് അനിവാര്യമായി വന്നപ്പോൾ കിട്ടാവുന്ന സമയം ഉപയോഗിച്ച് സ്കൂൾ
+                            വിദ്യാഭ്യാസം ലഭിച്ചവരുടെ സേവനം ഉപയോഗപ്പെടുത്തി വയോജന ക്ലാസ്സുകൾ നടത്തുകയും നിരവധി പേരെ
+                            എഴുതുവാനും വായിക്കുവാനും പഠിപ്പിച്ച് ഗ്രന്ഥാലയത്തിലെ പത്രമാസികകൾ വായിപ്പിക്കാനും തുടർന്ന്
+                            ഗ്രനാഥാലയത്തിലെ പുസ്‌തകങ്ങൾ വായിക്കാനും അവരെ പ്രാപ്തരാക്കി.
+                            <br>പഴയ വാടകകെട്ടിടത്തിലെ റേഡിയോ വാർത്തകൾ കേൾക്കുന്നതിന് ആളുകൾക്ക് സൗകര്യം ഉണ്ടാക്കിയത്
+                            മറക്കാനാവുന്നതല്ല. രാവിലെയും ഉച്ചക്കും വൈകുന്നേരവും പ്രാദേശിക വാർത്തകൾ കേൾക്കാൻ ആളുകൾ
+                            ഒത്തുകൂടുന്നത് പതിവ് കാഴ്‌ചയായിരുന്നു.
+                            <br>ദൈനംദിനപ്രവർത്തനങ്ങൾ നടത്താനുള്ള ചിലവുകളും പുസ്‌തകത്തിനുള്ള സംഖ്യയുമെല്ലാം
+                            സംഭാവനയിലൂടെയാണ് സ്വരൂപിച്ചിരുന്നത്. തുടർപ്രവർത്തനം നടക്കണമെങ്കിൽ സംഭാവനകൊണ്ടുമാത്രം
+                            മതിയാകാതെ വന്നപ്പോഴാണ് ഗ്രന്ഥശാലാസംഘത്തിൽ രജിസ്റ്റർ ചെയ്യാനുള്ള ശ്രമങ്ങൾ തുടങ്ങിയത്.
+                            ഗ്രന്ഥശാല സംഘത്തിൻ്റെ നിബന്ധനകൾ പാലിക്കാൻ തയ്യാറായെങ്കിലും ചിലരുടെ ഇടപെടൽ കാരണം അംഗീകാരം
+                            ലഭിക്കുന്നതിന് കുറെയേറെ പ്രയാസങ്ങൾ നേരിടേണ്ടിവന്നിരുന്നു. എങ്കിലും ഗ്രന്ഥശാല സംഘത്തിൽ
+                            അഫിലിയേറ്റ് ചെയ്യാൻ സാധിച്ചു.
+                            <br>തുടർന്ന് പുസ്‌തകങ്ങൾ വാങ്ങുന്നതിന് നാമമാത്രമായ ഗ്രാൻ്റ് ലഭിച്ചുവന്നു. ഗ്രാൻ്റ് വക
+                            വാങ്ങിക്കുന്ന പുസ്‌തകങ്ങൾക്ക് പുറമെ കുറെക്കൂടി പുസ്‌തകങ്ങൾ വീടുകളിൽ കയറിയിറങ്ങി
+                            ശേഖരിക്കുകയായിരുന്നു. അടിയന്തിരാവസ്ഥ കാലഘട്ടം നമ്മുടെ ഗ്രന്ഥാലയത്തിന് നേരെ ഭീഷണി മുഴക്കി
+                            നിരന്തരം വേട്ടയാടപ്പെട്ടു. ഇതിനേയെല്ലാം സധൈര്യം നേരിട്ടുമുന്നോട്ടുപോയ ചരിത്രമാണ് നമ്മുടേത്.
+                            <br>തിരഞ്ഞെടുക്കപ്പെട്ട ഗ്രന്ഥശാലാസംഘത്തെ പിരിച്ചുവിട്ടുകൊണ്ട് സർക്കാർ മുന്നോട്ട് പോയപ്പോൾ
+                            ജില്ലാതലത്തിലും, താലുക്ക് തലത്തിലും അഡ്ഹോക്ക് കമ്മിറ്റി രൂപീകരിച്ചു പ്രവർത്തിക്കുന്നതിൽ
+                            നമ്മുടെ ഗ്രന്ഥശാലാ പ്രവർത്തകരും സജീവമായി രംഗത്തുണ്ടായിരുന്നു.
+                            <br>ഭീഷണികളും അക്രമങ്ങളും തുടർന്നുവന്ന ഘട്ടത്തിൽ വളർന്നുവരുന്ന ഗ്രന്ഥശാലയിൽ ലഭ്യമായ എല്ലാ
+                            പുസ്‌തകങ്ങളും സൂക്ഷിക്കാൻ സൗകര്യം കുറഞ്ഞപ്പോൾ സൗകര്യപ്രദമായ സ്വന്തം കെട്ടിടം വേണമെന്ന ആശയം
+                            ശക്തമായി. ഇതിൻ്റെ ഫലമായി വാടകക്ക് പ്രവർത്തിച്ചുവന്ന കെട്ടിടത്തിൻ്റെ മുന്നിൽ തന്നെ റോഡരികിൽ
+                            രണ്ട് സെൻ്റ് സ്ഥലം വിലകൊടുത്തുവാങ്ങുകയും സ്വന്തം കെട്ടിടം നിർമ്മിക്കാനുള്ള പ്രവർത്തനം
+                            ആരംഭിക്കുകയും ചെയ്‌തു. ഗ്രന്ഥശാല സംഘത്തിന്റെ ഗ്രാൻ്റോടുകൂടിയാണ് കെട്ടിടനിർമ്മാണം ആരംഭിച്ചത്.
+                            ആവശ്യമായിവരുന്ന ചിലവിൻ്റെ 20% സംഖ്യയാണ് ഗ്രാൻ്റ്. ബാക്കിവരുന്ന 80% ചിലവ് സംഭാവനയായും
+                            അദ്ധ്വാനത്തിലൂടെയുമാണ് പ്രവർത്തകർ കണ്ടെത്തിയത്. ഒരു ഗ്രാമം മുഴുവൻ ഒറ്റക്കെട്ടായി നടത്തിയ
+                            പ്രവർത്തനത്തിന്റെ തെളിവായിരുന്നു, ഇന്നത്തെപ്പോലെ പൈപ്പ് വെള്ളമോ കിണറുകളോ ഇല്ലാതെ വെള്ളത്തിന്
+                            ബുദ്ധിമുട്ട് വന്നപ്പോൾ കുറുവൻതെരു ഗണപതി മണ്ഡപത്തിൻ്റെ കുളത്തിൽ നിന്ന് ഗ്രന്ഥശാല പ്രവർത്തകർ
+                            നിരന്നുനിന്ന് വെള്ളം കൊണ്ടുവന്നാണ് കെട്ടിടം പണി പൂർത്തീകരിച്ചത്. ആദ്യം വായനശാല ഹാളും
+                            ഗ്രന്ഥശാലക്കുവേണ്ടി ഒരു മുറിയും മാത്രമാണ് പണിതത്. പിന്നീട് ഒരു മുറികൂടി പണിയുകയും ചടയൻ്റെ
+                            സ്‌മരണയ്ക്കായി ഒരു ഹാൾ ഒന്നാം നിലയായി നിർമ്മിക്കുകയും ചെയ്തത് പൂർണ്ണമായും
+                            സംഭാവനയായിട്ടായിരുന്നു.
+                            <br>കമ്പിൽ പട്ടണത്തിൽ അഭിമാനത്തോടെ തലയുയർത്തിപ്പിടിച്ച് നിൽക്കുന്ന യുവജനവായനശാല ആൻ്റ്
+                            ഗ്രന്ഥാലയം നിരവധി തവണ അക്ഷരവൈരികളുടേയും സാമൂഹ്യദ്രോഹികളുടേയും കടുത്ത ആക്രമണത്തിന്
+                            വിധേയമായെങ്കിലും പഴയതിലും ശക്തമായി മുന്നോട്ടു പോകാൻ ജനങ്ങളുടെ പിന്തുണയും സഹായവും നിർലോഭം
+                            ലഭിച്ചിരുന്നു.
+                            <br>അഭിമാനത്തോടെ പറയട്ടെ പതിനായിരത്തോളം പുസ്‌തകവും നിരവധി ഫർണിച്ചറുകൾ, ടി.വി., റേഡിയോ,
+                            കമ്പ്യൂട്ടർ, മൈക്ക് സെറ്റ്, പ്രൊജക്ടർ എന്നിവയെല്ലാം വിവിധ സ്ഥാപനങ്ങൾ വഴി ലഭിച്ചവയുൾപ്പെടെ
+                            ഇന്ന് നമുക്ക് സ്വന്തമായിട്ടുണ്ട്. ചെറുപ്പക്കാരുടെ വായനഅൽപ്പം കുറഞ്ഞിട്ടുണ്ടെങ്കിലും പുതിയ
+                            വിദ്യാഭ്യാസ രീതികൾ കുട്ടികളെ ഗ്രന്ഥശാലയിലേക്ക് കുടുതൽ ആകർഷിച്ചു വരികയാണ്.
+                            <br>കമ്പിൽ പ്രദേശത്തെ സാംസ്‌കാരിക വളർച്ചയിൽ പ്രമുഖസ്ഥാനം നമുക്ക് ലഭ്യമായത് നാം ഏറ്റെടുത്ത്
+                            നടത്തിയ പ്രവർത്തനങ്ങളാണെന്ന് നമുക്കറിയാം. ചർച്ച ക്ലാസ്സുകൾ, ക്വിസ്സ് പ്രോഗ്രാമുകൾ,
+                            സെമിനാറുകൾ, സിമ്പോസിയങ്ങൾ, സംവാദങ്ങൾ, വിവിധ കലാ കായിക മത്സരങ്ങൾ, കലാപരിപാടികൾ, സാംസ്‌കാരിക
+                            സദസ്സുകൾ, നൃത്ത വിദ്യാലയം എന്നിവയെല്ലാം നടത്താൻ സാദ്ധ്യമായത് ജനങ്ങളുടെ സഹകരണവും
+                            പിന്തുണയുമായിരുന്നു.
+                            <br>ഇന്നും ജനങ്ങളുടെ സഹായ സഹകരണത്തോട് കൂടി അറുപതാം വാർഷിക നിറവിൽ മുന്നേറുന്നു...
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Go to Top Button -->
+    <button class="go-to-top" id="goToTopBtn" onclick="scrollToTop()">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Typing effect for the heading
+        const headingElement = document.getElementById("typing-heading");
+        const textToType = "ചരിത്രം";
+        let i = 0;
+
+        function typeHeading() {
+            if (i < textToType.length) {
+                headingElement.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeHeading, 80);
+            }
+        }
+
+        // Start typing effect immediately
+        typeHeading();
+
+        // Navigation functions
+        function toggleNav() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuIcon = document.getElementById('menuIcon');
+            const menuBtn = document.getElementById('menuBtn');
+
+            // Add pulse animation
+            menuBtn.classList.add('animate');
+            setTimeout(() => {
+                menuBtn.classList.remove('animate');
+            }, 300);
+
+            if (sidebar.classList.contains('open')) {
+                closeNav();
+            } else {
+                openNav();
+            }
+        }
+
+        function openNav() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuIcon = document.getElementById('menuIcon');
+
+            sidebar.classList.add('open');
+            overlay.classList.add('show');
+            menuIcon.className = 'bi bi-x-lg';
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden'; // Add this line
+        }
+
+        function closeNav() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const menuIcon = document.getElementById('menuIcon');
+
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+            menuIcon.className = 'bi bi-list';
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto'; // Add this line
+        }
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('menuBtn');
+
+            if (sidebar.classList.contains('open') &&
+                !sidebar.contains(e.target) &&
+                !menuBtn.contains(e.target)) {
+                closeNav();
+            }
+        });
+
+        // Add smooth scroll behavior for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Go to Top Button functionality
+        const goToTopBtn = document.getElementById('goToTopBtn');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                goToTopBtn.classList.add('show');
+            } else {
+                goToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('.hero-section');
+            const heroContent = document.querySelector('.hero-content');
+
+            if (heroSection && scrolled <= heroSection.offsetHeight) {
+                // Move hero section slower (0.5 = half speed)
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+
+                // Optional: Add fade out effect
+                heroContent.style.opacity = 1 - (scrolled / heroSection.offsetHeight);
+            }
+        });
+    </script>
+</body>
+
+</html>
