@@ -11,7 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security settings
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='').split(',')
+allowed_hosts_str = config('DJANGO_ALLOWED_HOSTS', default='*')
+ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',')]
+
 
 # Application definition
 INSTALLED_APPS = [
