@@ -2,15 +2,24 @@ from django.shortcuts import render, get_object_or_404
 from .models import Member, Image, NewsItem  
 
 def home(request):
-    members = Member.objects.all()
+    try:
+        members = Member.objects.all()
+    except:
+        members = []
     return render(request, 'home/home.html', {'members': members})
 
 def news(request):
-    news_list = NewsItem.objects.all().order_by('-uploaded_date')
+    try:
+        news_list = NewsItem.objects.all().order_by('-uploaded_date')
+    except:
+        news_list = []
     return render(request, 'home/news.html', {'news_list': news_list})
 
 def gallery(request):
-    imgs = Image.objects.all()  # Changed from images.objects
+    try:
+        imgs = Image.objects.all()
+    except:
+        imgs = []
     return render(request, 'home/images.html', {'imgs': imgs})
 
 def history(request):
