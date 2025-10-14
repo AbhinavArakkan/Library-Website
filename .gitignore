@@ -36,3 +36,7 @@ Thumbs.db
 # Backups
 *.bak
 *.tmp
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
