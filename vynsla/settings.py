@@ -58,11 +58,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vynsla.wsgi.application'
 
-# Database
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': '/tmp/db.sqlite3', 
     }
 }
 
