@@ -96,6 +96,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # WhiteNoise configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+WHITENOISE_AUTOREFRESH = True
+WHITENOISE_USE_FINDERS = True  # Use Django finders if files not collected yet
+WHITENOISE_MANIFEST_STRICT = False  # Don't crash if manifest is missing
+WHITENOISE_ALLOW_ALL_ORIGINS = True
+
+
+
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
