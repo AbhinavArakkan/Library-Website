@@ -14,7 +14,6 @@ DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 allowed_hosts_str = config('DJANGO_ALLOWED_HOSTS', default='*')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',')]
 
-
 # Application definition
 INSTALLED_APPS = [
     'jazzmin',
@@ -24,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',  # NEW - For S3
     'home',
 ]
 
@@ -58,14 +58,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vynsla.wsgi.application'
 
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',  
+        'NAME': config('RDS_DB_NAME', default='vynsla'),
+        'USER': config('RDS_USERNAME', default='postgres'),
+        'PASSWORD': config('RDS_PASSWORD'), 
+        'HOST': config('RDS_HOSTNAME'), 
+        'PORT': config('RDS_PORT', default='5432'),
     }
 }
+
+
 
 
 # Password validation
@@ -90,23 +94,31 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
+# STATIC FILES - Unchanged
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# WhiteNoise configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 WHITENOISE_AUTOREFRESH = True
-WHITENOISE_USE_FINDERS = True  # Use Django finders if files not collected yet
-WHITENOISE_MANIFEST_STRICT = False  # Don't crash if manifest is missing
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_MANIFEST_STRICT = False
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
+# MEDIA FILES - Changed to S3
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
+AWS_STORAGE_BUCKET_NAME = 'vynsla-media-files'
+AWS_S3_REGION_NAME = 'ap-southeast-2'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_DEFAULT_ACL = 'public-read'
+AWS_LOCATION = 'media'
 
-
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Use S3 for media files storage
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+MEDIA_ROOT = BASE_DIR / 'media'  # Kept for local development
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
