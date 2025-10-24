@@ -24,7 +24,11 @@ urlpatterns = [
     path('', include('home.urls')),
 ]
 
-
+#for production server to serve static and media files
 if not settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#for development server to serve media files
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

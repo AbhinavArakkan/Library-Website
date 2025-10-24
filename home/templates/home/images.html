@@ -485,24 +485,33 @@
 
             .lightbox-prev,
             .lightbox-next {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+                width: 30px;  /* Increased from 40px */
+                height: 30px;  /* Increased from 40px */
+                font-size: 1rem;  /* Increased from 1.2rem */
+                z-index: 1001;  /* ADD THIS - Ensures buttons are above image */
+                background: rgba(0, 0, 0, 0.195);  /* ADD THIS - Better visibility */
+                border-radius: 50%;  /* ADD THIS - Makes it circular */
             }
 
             .lightbox-prev {
-                left: 10px;
+                left: 5px;  /* Changed from 10px - closer to edge */
+                top: 50%;  /* ADD THIS - Vertically centers button */
+                transform: translateY(-50%);  /* ADD THIS - Perfect vertical centering */
             }
 
             .lightbox-next {
-                right: 10px;
+                right: 5px;  /* Changed from 10px - closer to edge */
+                top: 50%;  /* ADD THIS - Vertically centers button */
+                transform: translateY(-50%);  /* ADD THIS - Perfect vertical centering */
             }
 
             .lightbox-close {
                 top: 10px;
                 right: 10px;
-                width: 40px;
-                height: 40px;
+                font-size: .8rem;
+                width: 30px;
+                height: 30px;
+                z-index: 1001;  /* ADD THIS - Ensures close button is above everything */
             }
         }
 
