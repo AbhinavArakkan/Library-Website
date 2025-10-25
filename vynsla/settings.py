@@ -14,6 +14,19 @@ DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 allowed_hosts_str = config('DJANGO_ALLOWED_HOSTS', default='*')
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',')]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://yuvajanavayanashalakambil.in',
+    'https://www.yuvajanavayanashalakambil.in',
+    'http://yuvajanavayanashalakambil.in',
+    'http://www.yuvajanavayanashalakambil.in',
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = not DEBUG  # Only use secure cookies in production
+CSRF_COOKIE_SECURE = not DEBUG  # Only use secure cookies in production
+
+
+
 # Application definition
 INSTALLED_APPS = [
     'jazzmin',
