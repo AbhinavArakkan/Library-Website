@@ -3,7 +3,7 @@ from .models import Member, Image, NewsItem
 
 def home(request):
     try:
-        members = Member.objects.all()
+        members = Member.objects.all().order_by('id')  
     except:
         members = []
     return render(request, 'home/home.html', {'members': members})
