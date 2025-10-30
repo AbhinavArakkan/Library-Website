@@ -567,24 +567,40 @@
 
             .team-section {
                 padding: 60px 0;
-                /* Reduced from 100px */
-            }
-
-            .team-member {
-                margin-bottom: -10px;
-                /* Reduced from 40px */
-            }
-
-            .member-card {
-                padding: 60px 15px;
-                /* Reduced padding */
-                margin-bottom: -30px;
             }
 
             .section-title {
                 font-size: 2rem;
                 margin-bottom: 40px;
-                /* Reduced from 60px */
+            }
+
+            /* 2 CARDS PER ROW ON MOBILE */
+            .team-section .row > [class*='col-'] {
+                flex: 0 0 49%;  /* Each card takes 50% width */
+                max-width: 50%;
+                padding: 0 5px;
+            }
+
+            .team-member {
+                margin-bottom: 1px;  /* Reduced spacing between rows */
+            }
+
+            .member-card {
+                padding: 20px 10px;  /* Smaller padding for mobile */
+            }
+
+            .member-image {
+                width: 100px;  /* Slightly smaller image on mobile */
+                height: 100px;
+                margin-bottom: 15px;
+            }
+
+            .member-name {
+                font-size: 0.95rem;  /* Slightly smaller text */
+            }
+
+            .member-position {
+                font-size: 0.7rem;
             }
 
             .map-container iframe {
@@ -669,11 +685,7 @@
     <!-- Team Section -->
     <section class="team-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
                     <h2 class="section-title fade-in-up">Our Distinguished Team</h2>
-                </div>
-            </div>
             <div class="row justify-content-center">
                 {% for member in members %}
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4 fade-in-up">
@@ -695,7 +707,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 mb-4 mb-lg-0 fade-in-up">
-                    <h2 class="section-title text-start">Visit Our Library</h2>
+                    <h2 class="section-title">Visit Our Library</h2>
                     <div class="map-container">
                         <iframe loading="lazy" allowfullscreen
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1968.0731118458553!2d75.39404814585286!3d11.966430993880976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba43f5d01ee2ba1%3A0x949c279c41b189f0!2sYuvajana%20Vayanasala%20%26%20Grandhalayam%20Kambil!5e0!3m2!1sen!2sin!4v1647615696953!5m2!1sen!2sin">
